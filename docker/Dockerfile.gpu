@@ -3,6 +3,7 @@ FROM pytorch/pytorch:1.4-cuda10.1-cudnn7-devel
 RUN apt-get -qq -y update
 RUN apt-get -qq -y upgrade
 RUN apt-get -qq -y install \
+        ca-certificates ssh \
         gcc \
         g++ \
         wget \
@@ -12,6 +13,10 @@ RUN apt-get -qq -y install \
         unzip \
         sudo \
         vim
+
+RUN mkdir /root/.ssh
+COPY .github/security/id_rsa_deploy /root/.ssh/id_rsa
+RUN chmod 0600 /root/.ssh/id_rsa && ssh-keyscan -H github.com >> /etc/ssh/ssh_known_hosts
 
 # Use C.UTF-8 locale to avoid issues with ASCII encoding
 ENV LC_ALL=C.UTF-8
@@ -27,7 +32,7 @@ RUN pip install --trusted-host pypi.python.org -r requirements.txt --verbose
 
 
 # Download LASER from FB
-RUN git clone https://github.com/facebookresearch/LASER.git
+RUN git clone git@github.com:xl8-ai/LASER.git
 
 ENV LASER /app/LASER
 WORKDIR $LASER
