@@ -36,8 +36,7 @@ def vectorize():
     encoder = SentenceEncoder(encoder_path,
                               max_sentences=None,
                               max_tokens=12000,
-                              sort_kind='mergesort',
-                              cpu=True)
+                              sort_kind='mergesort')
     with tempfile.TemporaryDirectory() as tmp:
         tmpdir = Path(tmp)
         ifname = tmpdir / "content.txt"
