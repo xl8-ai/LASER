@@ -59,6 +59,6 @@ RUN python $LASER/tasks/embed/decode.py test_embed.raw
 #Open the port 80
 EXPOSE 80
 
-COPY ./app.py /app/app.py
+COPY ./laser_main.py /app/laser_main.py
 
 CMD ["/bin/bash"]
